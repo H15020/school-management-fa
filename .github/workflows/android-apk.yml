@@ -36,12 +36,12 @@ jobs:
           echo "$(dirname "$SDKMANAGER")" >> "$GITHUB_PATH"
           echo "SDK manager: $SDKMANAGER"
 
-      - name: نصب پلتفرم و ابزارهای Android 35
+      - name: پذیرش مجوزها و نصب Android 35
         shell: bash
         run: |
           set -euo pipefail
           SDKMANAGER="$(command -v sdkmanager)"
-          yes | "$SDKMANAGER" --licenses
+          "$SDKMANAGER" --licenses < <(yes)
           "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
       - name: راه‌اندازی Gradle 8.9
