@@ -21,13 +21,28 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: راه‌اندازی Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: نصب ابزارهای Android 35
+      - name: شناسایی Android SDK از پیش نصب‌شده
+        shell: bash
         run: |
-          yes | sdkmanager --licenses
-          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+          set -euo pipefail
+          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "$SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
+          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager 2>/dev/null | sort -V | tail -n 1)"
+          if [ -z "$SDKMANAGER" ]; then
+            echo "sdkmanager was not found under $SDK_ROOT/cmdline-tools"
+            exit 1
+          fi
+          echo "$(dirname "$SDKMANAGER")" >> "$GITHUB_PATH"
+          echo "SDK manager: $SDKMANAGER"
+
+      - name: نصب پلتفرم و ابزارهای Android 35
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDKMANAGER="$(command -v sdkmanager)"
+          yes | "$SDKMANAGER" --licenses
+          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0" "platform-tools"
 
       - name: راه‌اندازی Gradle 8.9
         uses: gradle/actions/setup-gradle@v4
