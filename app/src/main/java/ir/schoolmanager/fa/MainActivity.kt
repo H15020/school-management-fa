@@ -3,12 +3,14 @@ package ir.schoolmanager.fa
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -22,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -74,6 +77,13 @@ private fun SchoolHomeScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.Start
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_school_management),
+                    contentDescription = "نشان مدیریت آموزشی",
+                    modifier = Modifier
+                        .size(88.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
                 Text(
                     text = "مدیریت مدرسه",
                     fontSize = 26.sp,
@@ -85,7 +95,7 @@ private fun SchoolHomeScreen() {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "حالت آفلاین: آماده طراحی و پیاده‌سازی",
+                    text = "سامانه آفلاین مدیریت آموزشی",
                     fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.primary
                 )
